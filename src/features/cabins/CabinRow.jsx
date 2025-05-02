@@ -56,7 +56,6 @@ const CabinRow = ({ cabin }) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, mutate } = useMutation({
-    mutationKey: "cabins",
     mutationFn: deleteCabin,
     onSuccess: () => {
       toast.success("cabin deleting successfully");
