@@ -11,7 +11,7 @@ import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import FormRow from "../../ui/FormRow";
 import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
+import { useUpdateCabin } from "./useUpdateCabin";
 
 const Label = styled.label`
   font-weight: 500;
@@ -19,8 +19,8 @@ const Label = styled.label`
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { isCreating, createCabin } = useCreateCabin();
-  const { editCabin, isEditing } = useEditCabin();
-  const isWorking = isCreating || isEditing;
+  const { updateCabin, isUpdating } = useUpdateCabin();
+  const isWorking = isCreating || isUpdating;
 
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditedSession = Boolean(editId);
@@ -34,7 +34,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditedSession) {
-      editCabin(
+      updateCabin(
         { newCabin: { ...data, image }, id: editId },
         {
           onSuccess: () => {
@@ -60,7 +60,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow lable="Cabin name" error={errors?.name?.message}>
+      <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           disabled={isWorking}
           type="text"
@@ -71,7 +71,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow lable="Maximum capacity" error={errors?.maxCapacity?.message}>
+      <FormRow label="Maximum capacity" error={errors?.maxCapacity?.message}>
         <Input
           disabled={isWorking}
           type="number"
@@ -86,7 +86,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow lable="Regular pric" error={errors?.regularPrice?.message}>
+      <FormRow label="Regular pric" error={errors?.regularPrice?.message}>
         <Input
           disabled={isWorking}
           type="number"
@@ -101,7 +101,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow lable="Discount" error={errors?.discount?.message}>
+      <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
           disabled={isWorking}
           type="number"
@@ -117,7 +117,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       </FormRow>
 
       <FormRow
-        lable="Description for website"
+        label="Description for website"
         error={errors?.description?.message}
       >
         <Textarea
