@@ -1,11 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { getCabins } from "../../services/apiCabins";
 import CabinRow from "../../features/cabins/CabinRow";
 import Spinner from "../../ui/Spinner";
-import { useState } from "react";
-import CreateCabinForm from "./CreateCabinForm";
-import Button from "../../ui/Button";
 import { useCabins } from "./useCabins";
 
 const Table = styled.div`
@@ -33,7 +28,6 @@ const TableHeader = styled.header`
 `;
 
 const CabinTable = () => {
-  const [showForm, setShowForm] = useState(false);
   const { isLoading, cabins } = useCabins();
 
   if (isLoading) return <Spinner />;
@@ -53,10 +47,6 @@ const CabinTable = () => {
           <CabinRow cabin={cabin} key={cabin.id} />
         ))}
       </Table>
-      <Button onClick={() => setShowForm((flag) => !flag)}>
-        {showForm ? "Close form" : "Show form"}
-      </Button>
-      {showForm && <CreateCabinForm />}
     </>
   );
 };
