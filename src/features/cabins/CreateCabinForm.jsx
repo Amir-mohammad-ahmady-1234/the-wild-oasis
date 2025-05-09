@@ -139,6 +139,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         <FileInput
           id="image"
           accept="image/*"
+          disabled={isWorking}
           {...register("image", {
             required: isEditedSession ? false : "this field is required",
           })}
