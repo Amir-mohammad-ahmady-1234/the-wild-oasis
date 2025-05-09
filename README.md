@@ -30,28 +30,6 @@ Password: admin123
 - **Booking System**: Create and manage guest bookings
 - **User Settings**: Configure hotel preferences and settings
 
-### Screenshots
-
-<details>
-<summary>📸 View Screenshots</summary>
-
-#### Dashboard
-
-![Dashboard](https://i.imgur.com/example1.png)
-
-#### Cabin Management
-
-![Cabin Management](https://i.imgur.com/example2.png)
-
-#### Booking System
-
-![Booking System](https://i.imgur.com/example3.png)
-
-#### Settings
-
-![Settings](https://i.imgur.com/example4.png)
-
-</details>
 
 ## ✨ Features
 
@@ -192,15 +170,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (\`git push origin feature/AmazingFeature\`)
 5. Open a Pull Request
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 👥 Author
 
-## 👥 Authors
-
-- Your Name -
-
-## 🙏 Acknowledgments
-
-- Thanks to all contributors who have helped shape this project
-- Special thanks to the React and Supabase communities for their excellent documentation and support
+- [AmirMohammad](https://github.com/Amir-mohammad-ahmady-1234) -
