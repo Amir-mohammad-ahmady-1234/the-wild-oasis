@@ -1,57 +1,51 @@
-import styled from "styled-components";
+import { useForm } from "react-hook-form";
 
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
-
-import { useForm } from "react-hook-form";
 import FormRow from "../../ui/FormRow";
-import { useCreateCabin } from "./useCreateCabin";
-import { useUpdateCabin } from "./useUpdateCabin";
 
-const Label = styled.label`
-  font-weight: 500;
-`;
+import { useCreateCabin } from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabin } = useCreateCabin();
-  const { updateCabin, isUpdating } = useUpdateCabin();
-  const isWorking = isCreating || isUpdating;
+  const { isEditing, editCabin } = useEditCabin();
+  const isWorking = isCreating || isEditing;
 
   const { id: editId, ...editValues } = cabinToEdit;
-  const isEditedSession = Boolean(editId);
+  const isEditSession = Boolean(editId);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditedSession ? editValues : {},
+    defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditedSession) {
-      updateCabin(
-        { newCabin: { ...data, image }, id: editId },
+    if (isEditSession)
+      editCabin(
+        { newCabinData: { ...data, image }, id: editId },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
             reset();
             onCloseModal?.();
           },
         }
       );
-    } else {
+    else
       createCabin(
         { ...data, image: image },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
             reset();
             onCloseModal?.();
           },
         }
       );
-    }
   }
 
   function onError(errors) {
@@ -65,40 +59,40 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
-          disabled={isWorking}
           type="text"
           id="name"
+          disabled={isWorking}
           {...register("name", {
-            required: "this field is required",
+            required: "This field is required",
           })}
         />
       </FormRow>
 
       <FormRow label="Maximum capacity" error={errors?.maxCapacity?.message}>
         <Input
-          disabled={isWorking}
           type="number"
           id="maxCapacity"
+          disabled={isWorking}
           {...register("maxCapacity", {
-            required: "this field is required",
+            required: "This field is required",
             min: {
               value: 1,
-              message: "should chose bigger number.",
+              message: "Capacity should be at least 1",
             },
           })}
         />
       </FormRow>
 
-      <FormRow label="Regular pric" error={errors?.regularPrice?.message}>
+      <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
-          disabled={isWorking}
           type="number"
           id="regularPrice"
+          disabled={isWorking}
           {...register("regularPrice", {
-            required: "this field is required",
+            required: "This field is required",
             min: {
               value: 1,
-              message: "capacity should be at least 1",
+              message: "Capacity should be at least 1",
             },
           })}
         />
@@ -106,12 +100,12 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
 
       <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
-          disabled={isWorking}
           type="number"
           id="discount"
+          disabled={isWorking}
           defaultValue={0}
           {...register("discount", {
-            required: "this field is required",
+            required: "This field is required",
             validate: (value) =>
               value <= getValues().regularPrice ||
               "Discount should be less than regular price",
@@ -124,24 +118,22 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         error={errors?.description?.message}
       >
         <Textarea
-          disabled={isWorking}
           type="number"
           id="description"
           defaultValue=""
+          disabled={isWorking}
           {...register("description", {
-            required: "this field is required",
+            required: "This field is required",
           })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image">Cabin photo</Label>
+      <FormRow label="Cabin photo">
         <FileInput
           id="image"
           accept="image/*"
-          disabled={isWorking}
           {...register("image", {
-            required: isEditedSession ? false : "this field is required",
+            required: isEditSession ? false : "This field is required",
           })}
         />
       </FormRow>
@@ -156,7 +148,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditedSession ? "Edit cabin" : "create new cabin"}
+          {isEditSession ? "Edit cabin" : "Create new cabin"}
         </Button>
       </FormRow>
     </Form>

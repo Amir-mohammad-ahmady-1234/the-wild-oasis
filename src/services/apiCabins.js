@@ -25,32 +25,32 @@ export async function createEditCabin(newCabin, id) {
   // 1. Create/edit cabin
   let query = supabase.from("cabins");
 
-  // A. CREATE
+  // A) CREATE
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
-  // B. EDIT
+  // B) EDIT
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
 
   if (error) {
     console.error(error);
-    throw new Error(
-      id ? "Cabin could not be edited" : "Cabin could not be created"
-    );
+    throw new Error("Cabin could not be created");
   }
 
-  // 2. upload file
+  // 2. Upload image
+  if (hasImagePath) return data;
+
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
     .upload(imageName, newCabin.image);
 
-  // 3. delete cabin if image don't uploaded
+  // 3. Delete the cabin IF there was an error uplaoding image
   if (storageError) {
     await supabase.from("cabins").delete().eq("id", data.id);
     console.error(storageError);
     throw new Error(
-      "image could not be uploaded and cabin was not added to cabins. please try again."
+      "Cabin image could not be uploaded and the cabin was not created"
     );
   }
 

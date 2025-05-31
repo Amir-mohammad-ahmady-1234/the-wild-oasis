@@ -1,7 +1,6 @@
-import styled from "styled-components";
-import CreateCabinForm from "../features/cabins/CreateCabinForm";
-import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
+import { HiXMark } from "react-icons/hi2";
+import styled from "styled-components";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -52,7 +51,7 @@ const Button = styled.button`
   }
 `;
 
-const Modal = ({ children, onClose }) => {
+function Modal({ children, onClose }) {
   return createPortal(
     <Overlay>
       <StyledModal>
@@ -65,6 +64,6 @@ const Modal = ({ children, onClose }) => {
     </Overlay>,
     document.body
   );
-};
+}
 
 export default Modal;

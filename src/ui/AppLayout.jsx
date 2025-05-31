@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
 import Sidebar from "./Sidebar";
+import Header from "./Header";
 import styled from "styled-components";
 
 const StyledAppLayout = styled.div`
@@ -24,12 +24,11 @@ const Container = styled.div`
   gap: 3.2rem;
 `;
 
-function AppLayOut() {
+function AppLayout() {
   return (
     <StyledAppLayout>
       <Header />
       <Sidebar />
-
       <Main>
         <Container>
           <Outlet />
@@ -39,4 +38,4 @@ function AppLayOut() {
   );
 }
 
-export default AppLayOut;
+export default AppLayout;

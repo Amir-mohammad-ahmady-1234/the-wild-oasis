@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
-import CabinRow from "../../features/cabins/CabinRow";
 import Spinner from "../../ui/Spinner";
-import { useState } from "react";
-import CreateCabinForm from "./CreateCabinForm";
-import Button from "../../ui/Button";
+import CabinRow from "./CabinRow";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -31,7 +28,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-const CabinTable = () => {
+function CabinTable() {
   const {
     isLoading,
     data: cabins,
@@ -41,31 +38,23 @@ const CabinTable = () => {
     queryFn: getCabins,
   });
 
-  const [showForm, setShowForm] = useState(false);
-
   if (isLoading) return <Spinner />;
 
   return (
-    <>
-      <Table role="table">
-        <TableHeader role="row">
-          <div></div>
-          <div>cabin</div>
-          <div>capacity</div>
-          <div>price</div>
-          <div>discount</div>
-          <div></div>
-        </TableHeader>
-        {cabins.map((cabin) => (
-          <CabinRow cabin={cabin} key={cabin.id} />
-        ))}
-      </Table>
-      <Button onClick={() => setShowForm((flag) => !flag)}>
-        {showForm ? "Close form" : "Show form"}
-      </Button>
-      {showForm && <CreateCabinForm />}
-    </>
+    <Table role="table">
+      <TableHeader role="row">
+        <div></div>
+        <div>Cabin</div>
+        <div>Capacity</div>
+        <div>Price</div>
+        <div>Discount</div>
+        <div></div>
+      </TableHeader>
+      {cabins.map((cabin) => (
+        <CabinRow cabin={cabin} key={cabin.id} />
+      ))}
+    </Table>
   );
-};
+}
 
 export default CabinTable;
